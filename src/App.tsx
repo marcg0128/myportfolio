@@ -1,5 +1,5 @@
 import './App.css'
-import NavBar from "./components/navbar.tsx";
+import NavBar from "./components/NavBar/NavBar.tsx";
 
 import {useState, useEffect} from "react";
 
@@ -24,7 +24,7 @@ function App() {
             <NavBar hidden={scale !== 0.3}/>
 
             <div
-                className="flex justify-center w-full h-full mt-[15%] absolute"
+                className="flex justify-center w-full h-full mt-[15%] absolute z-50 items-start"
                 style={{
                         position: "sticky",
                         top: 38,
@@ -33,7 +33,7 @@ function App() {
                     }}
             >
                 <h1
-                    className="text-3xl md:text-9xl "
+                    className="text-3xl md:text-9xl z-50"
 
                 >
                     Marcos Gomez Alvarez
