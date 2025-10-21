@@ -3,6 +3,7 @@ import NavBarCards from "@/components/NavBar/Cards/NavBarCards.tsx";
 
 export default function NavBar({ hidden = false }) {
     const [isOpen, setIsOpen] = useState(false);
+    // @ts-ignore
     return (
         <div
     className={`flex justify-center items-start h-16 w-full fixed top-0 left-0 z-49 animate-fade ${
@@ -38,14 +39,37 @@ export default function NavBar({ hidden = false }) {
                     <div>Developer · Innovator · Tech Enthusiast</div>
                 </div>
                 <div>
-                    <button className="bg-[#0F171F] p-4 px-6 rounded-4xl">
+                    <button className="bg-[#0F171F] p-4 px-6 rounded-4xl cursor-pointer  hover:bg-[#141E28] transition-colors duration-200">
                         Contact Me
                     </button>
                 </div>
 
                 {isOpen && (
-                    <div className="absolute top-[50%] left-0 w-full  rounded-b-4xl p-6 flex justify-center  gap-4">
-                        <NavBarCards hidden={false} title="Test" description="test"/>
+                    <div className="absolute top-[25%] left-0 w-full rounded-b-4xl p-6 flex justify-start ml-10 gap-4">
+
+                        <NavBarCards
+                            title="About me"
+                            links={[
+                                { label: "Me", href: "#portfolio" },
+                                { label: "Career", href: "https://github.com" },
+                            ]}
+                        />
+                        <NavBarCards
+
+                            title="Projects"
+                            links={[
+                                { label: "Discord", href: "#portfolio" },
+                                { label: "Websites", href: "https://github.com" },
+                                { label: "FiveM", href: "#contact" },
+                            ]}
+                        />
+                        <NavBarCards
+                            title="Skills"
+                            links={[
+                                { label: "Tools", href: "https://github.com" },
+                                { label: "Programming Languages", href: "#portfolio" }
+                            ]}
+                        />
                     </div>
                 )}
             </nav>
