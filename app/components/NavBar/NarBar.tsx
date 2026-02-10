@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import NavBarCards from "@/app/components/NavBar/Cards/NavBarCards";
 import BoxComponent from "@/app/components/BoxComponent";
 import FillText from "@/app/components/Elements/FillText";
+import Image from "next/image";
 
 export default function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +12,7 @@ export default function NavBar() {
     useEffect(() => {
         const timer = setTimeout(() => {
             setTitleAnimated(true);
-        }, 2000);
+        }, 1200);
 
         return () => clearTimeout(timer);
     }, []);
@@ -31,7 +32,7 @@ export default function NavBar() {
                     }`}>
                         <FillText
                                 text="Marcos Gomez Alvarez"
-                                duration={1.5}
+                                duration={0.7}
                                 fillColor="text-[#DEF5FF]"
                                 baseColor="text-gray-600"
                                 chaos={1.6}
@@ -66,15 +67,26 @@ export default function NavBar() {
                         </button>
                     </div>
 
-                    <div className="mt-8 ml-10 text-[#9EB4CA]">
+                    <div className="mt-8 ml-14 text-[#9EB4CA] flex justify-center items-center gap-3">
                         {/* Placeholder für Layout */}
-                        <div>Developer · Innovator · Tech Enthusiast</div>
+                        <div>18 years old</div>
+                        <div>·</div>
+                        <div className="">
+                            <Image src="marker.svg" alt="Marker image" width={16} height={15} className="inline mx-1"/>
+                            Porta Westfalica, Germany
+                        </div>
                     </div>
 
-                    <div>
-                        <button className="bg-[#0F171F] p-4 px-6 rounded-4xl cursor-pointer hover:bg-[#141E28] transition-colors duration-200">
-                            Contact Me
-                        </button>
+                    <div className="flex justify-center items-center gap-4  mt-2">
+                        <a href="https://github.com/marcg0128" target="_blank">
+                            <Image src={"github.svg"} alt={"github"} width={37} height={37}/>
+                        </a>
+                        <a href="" target={"_blank"}>
+                            <Image src={"linkedin-circle.svg"} alt={"linkedin"} width={37} height={37}/>
+                        </a>
+                        <a href="mailto:marcg0128@hotmail.com" target="_blank">
+                            <Image src={"umschlag.svg"} alt={"email"} width={37} height={37}/>
+                        </a>
                     </div>
 
                     {isOpen && (

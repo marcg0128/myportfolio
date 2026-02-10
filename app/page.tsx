@@ -9,7 +9,15 @@ import Aurora from "@/app/components/Elements/Aurora";
 
 
 export default function Home() {
+    const [bodyVisibility, setBodyVisibility] = useState(false);
 
+    useEffect(() => {
+        setTimeout(() => {
+            setBodyVisibility(true);
+        }, 1700);
+
+
+    }, []);
 
     return (
         <>
@@ -25,7 +33,9 @@ export default function Home() {
                     />
                 </div>
 
-                <div className="z-40 relative">
+                <div className={`z-40 relative transition-opacity duration-1000 ${
+                    bodyVisibility ? 'opacity-100' : 'opacity-0'
+                }`}>
                     <div>
                         <Start></Start>
 
