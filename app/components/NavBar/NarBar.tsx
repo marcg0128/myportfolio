@@ -67,7 +67,7 @@ export default function NavBar() {
                         </button>
                     </div>
 
-                    <div className="mt-8 ml-14 text-[#9EB4CA] flex justify-center items-center gap-3">
+                    <div className="mt-8 ml-14 text-[#9EB4CA] flex justify-center items-center gap-3 whitespace-nowrap">
                         {/* Placeholder für Layout */}
                         <div>18 years old</div>
                         <div>·</div>
