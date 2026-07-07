@@ -8,7 +8,7 @@ type BoxComponentProps = {
     center?: boolean;
 };
 
-export default function BoxComponent({ children, style = "" , w = "1/2", center = true}: BoxComponentProps) {
+export default function BoxComponent({ children, style = "" , w = "full", center = true}: BoxComponentProps) {
 
     return (
         <div

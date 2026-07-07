@@ -2,6 +2,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Skill docs and agent config contain example class names (e.g. "w-1/2") in prose;
+   excluding them keeps Tailwind's auto content scan from generating utilities that
+   were never actually used in the app. */
+@source not "../.claude";
+@source not "../.agents";
+
 @custom-variant dark (&:is(.dark *));
 
 @keyframes fadeIn {

@@ -48,7 +48,7 @@ export default function NavBar() {
                     titleAnimated ? 'opacity-100' : 'opacity-0'
                 }`}
             >
-                <BoxComponent style={`${isOpen ? 'h-70' : 'h-20'} bg-(--bg)`}>
+                <BoxComponent style={`${isOpen ? 'h-70' : 'h-20'} bg-(--bg)`} w={"1/2"}>
                     <div>
 
                         <button
