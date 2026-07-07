@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Aurora from "@/app/components/Elements/Aurora";
 
 type Offer = {
     title: string;
     description: string;
-    href: string;
 };
 
 const offers: Offer[] = [
@@ -14,19 +15,16 @@ const offers: Offer[] = [
         title: "Website",
         description:
             "A custom website built from scratch, fast and easy to maintain long after launch.",
-        href: "mailto:marcg0128@hotmail.com?subject=Website%20inquiry",
     },
     {
         title: "Clients",
         description:
             "Ongoing help for businesses that need a developer on call for new features, fixes, and updates.",
-        href: "mailto:marcg0128@hotmail.com?subject=Client%20work%20inquiry",
     },
     {
         title: "Others",
         description:
             "Automation scripts, integrations, and anything else that doesn't fit a neat category.",
-        href: "mailto:marcg0128@hotmail.com?subject=Project%20inquiry",
     },
 ];
 
@@ -39,11 +37,41 @@ const steps = [
 
 export default function OffersPage() {
     const [mounted, setMounted] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const [selectedOffer, setSelectedOffer] = useState("");
+    const [highlightContact, setHighlightContact] = useState(false);
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
 
     useEffect(() => {
         const timer = setTimeout(() => setMounted(true), 50);
         return () => clearTimeout(timer);
     }, []);
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 20);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+
+    const scrollToContact = (offerTitle?: string) => {
+        if (offerTitle) {
+            setSelectedOffer(offerTitle);
+            setMessage((prev) => prev || `Hi, I'm interested in: ${offerTitle}.`);
+        }
+        document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        setHighlightContact(true);
+        window.setTimeout(() => setHighlightContact(false), 1000);
+    };
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        const subject = selectedOffer ? `${selectedOffer} inquiry` : "Project inquiry";
+        const body = `${message}\n\n— ${name || "(no name)"} (${email || "no email provided"})`;
+        window.location.href = `mailto:marcg0128@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    };
 
     const reveal = (delayMs: number) => ({
         className: `transition-all duration-500 ${
@@ -56,36 +84,58 @@ export default function OffersPage() {
     });
 
     return (
-        <div className="theme-light offers-site min-h-screen w-full relative overflow-x-hidden flex flex-col">
-            {/* Nav: this page is its own site, not the portfolio's global nav */}
-            <header className="sticky top-0 z-30 offers-nav">
-                <div className="max-w-7xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                        <span className="w-8 h-8 rounded-full bg-(--primary) text-white flex items-center justify-center text-sm font-bold shrink-0">
-                            M
-                        </span>
-                        <span className="font-semibold">
-                            Marcos <span className="text-(--text-muted) font-normal">offers</span>
-                        </span>
-                    </div>
-                    <nav className="flex items-center gap-5">
-                        <Link
-                            href="/"
-                            className="hidden sm:inline text-sm text-(--text-muted) hover:text-(--text) transition-colors duration-200"
-                        >
-                            Back to portfolio
-                        </Link>
-                        <a
-                            href="mailto:marcg0128@hotmail.com?subject=Project%20inquiry"
-                            className="offers-pill-btn text-sm"
-                        >
-                            Get in touch
-                        </a>
-                    </nav>
-                </div>
-            </header>
+        <div className="theme-light offers-site min-h-screen w-full relative overflow-x-clip flex flex-col">
+            <div className="fixed inset-0 z-0 pointer-events-none opacity-40">
+                <Aurora
+                        colorStops={["#5227FF","#5227FF"]}
+                        amplitude={0.3}
+                        blend={0.5}
+                    />
+            </div>
 
-            <main className="flex-1">
+            <div className="relative z-10 flex flex-col flex-1">
+                {/* Nav: this page is its own site, not the portfolio's global nav */}
+                <header
+                    className={`sticky top-0 z-30 transition-[padding] duration-300 ${
+                        scrolled ? "pt-3 px-3 md:px-4" : ""
+                    }`}
+                    style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
+                >
+                    <div
+                        className={`offers-nav mx-auto flex items-center justify-between transition-all duration-300 ${
+                            scrolled
+                                ? "offers-nav--island max-w-3xl h-14 px-5 md:px-6"
+                                : "max-w-7xl h-16 px-6 md:px-12"
+                        }`}
+                        style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
+                    >
+                        <div className="flex items-center gap-2.5">
+                            <span className="w-8 h-8 rounded-full bg-(--primary) text-white flex items-center justify-center text-sm font-bold shrink-0">
+                                M
+                            </span>
+                            <span className="font-semibold">
+                                Marcos <span className="text-(--text-muted) font-normal">offers</span>
+                            </span>
+                        </div>
+                        <nav className="flex items-center gap-5">
+                            <Link
+                                href="/"
+                                className="hidden sm:inline text-sm text-(--text-muted) hover:text-(--text) transition-colors duration-200"
+                            >
+                                Back to portfolio
+                            </Link>
+                            <button
+                                type="button"
+                                onClick={() => scrollToContact()}
+                                className="offers-pill-btn text-sm"
+                            >
+                                Get in touch
+                            </button>
+                        </nav>
+                    </div>
+                </header>
+
+                <main className="flex-1">
                 {/* Hero */}
                 <section className="max-w-7xl mx-auto px-6 md:px-12 pt-14 md:pt-20 pb-16 md:pb-24 grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-10 md:gap-14 items-center">
                     <div {...reveal(0)}>
@@ -97,12 +147,13 @@ export default function OffersPage() {
                             the code so you don&apos;t have to think about it.
                         </p>
                         <div className="mt-8 flex items-center gap-4">
-                            <a
-                                href="mailto:marcg0128@hotmail.com?subject=Project%20inquiry"
+                            <button
+                                type="button"
+                                onClick={() => scrollToContact()}
                                 className="offers-pill-btn"
                             >
                                 Get in touch
-                            </a>
+                            </button>
                             <a
                                 href="#services"
                                 className="inline-flex items-center gap-2 text-(--text) hover:gap-3 transition-all duration-200"
@@ -130,7 +181,7 @@ export default function OffersPage() {
                 </section>
 
                 {/* Services */}
-                <section id="services" className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+                <section id="services" className="scroll-mt-24 max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
                     <h2 {...reveal(0)} className={`${reveal(0).className} text-2xl md:text-3xl font-semibold`}>
                         What I can do for you
                     </h2>
@@ -140,9 +191,10 @@ export default function OffersPage() {
                             {...reveal(80)}
                             className={`${reveal(80).className} md:col-span-2 md:row-span-2`}
                         >
-                            <a
-                                href={offers[0].href}
-                                className="service-card service-card--photo group relative block rounded-4xl overflow-hidden h-full min-h-[320px]"
+                            <button
+                                type="button"
+                                onClick={() => scrollToContact(offers[0].title)}
+                                className="service-card service-card--photo group relative block w-full text-left rounded-4xl overflow-hidden h-full min-h-[320px]"
                             >
                                 <Image
                                     src="https://picsum.photos/seed/web-development-code-screen/1200/900"
@@ -165,14 +217,15 @@ export default function OffersPage() {
                                         <Image src="/pfeil-oben-rechts.svg" alt="" width={11} height={11} className="invert" />
                                     </span>
                                 </div>
-                            </a>
+                            </button>
                         </div>
 
                         {offers.slice(1).map((offer, i) => (
                             <div key={offer.title} {...reveal(160 + i * 70)}>
-                                <a
-                                    href={offer.href}
-                                    className="service-card group flex flex-col rounded-4xl p-7 h-full bg-(--bg-light) outline outline-[#606060]/20 backdrop-blur-lg"
+                                <button
+                                    type="button"
+                                    onClick={() => scrollToContact(offer.title)}
+                                    className="service-card group flex flex-col w-full text-left rounded-4xl p-7 h-full bg-(--bg-light) outline outline-[#606060]/20 backdrop-blur-lg"
                                 >
                                     <h3 className="text-xl font-semibold">{offer.title}</h3>
                                     <p className="mt-2 text-(--text-muted) leading-relaxed">
@@ -182,7 +235,7 @@ export default function OffersPage() {
                                         Get in touch
                                         <Image src="/pfeil-oben-rechts.svg" alt="" width={11} height={11} />
                                     </span>
-                                </a>
+                                </button>
                             </div>
                         ))}
                     </div>
@@ -209,38 +262,86 @@ export default function OffersPage() {
                         ))}
                     </div>
                 </section>
-            </main>
 
-            <footer className="border-t border-(--border-muted)">
-                <div className="max-w-7xl mx-auto px-6 md:px-12 py-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                    <div>
-                        <div className="flex items-center gap-2.5">
-                            <span className="w-8 h-8 rounded-full bg-(--primary) text-white flex items-center justify-center text-sm font-bold shrink-0">
-                                M
-                            </span>
-                            <span className="font-semibold">Marcos Gomez Alvarez</span>
+                {/* Contact */}
+                <section id="contact" className="scroll-mt-24 max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24 border-t border-(--border-muted)">
+                    <div
+                        {...reveal(0)}
+                        className={`${reveal(0).className} max-w-2xl mx-auto rounded-4xl p-8 md:p-10 bg-(--bg-light) outline outline-[#606060]/20 backdrop-blur-lg ${
+                            highlightContact ? "offers-contact-highlight" : ""
+                        }`}
+                    >
+                        <h2 className="text-2xl md:text-3xl font-semibold text-center">Let&apos;s talk</h2>
+                        <p className="mt-2 text-(--text-muted) text-center leading-relaxed">
+                            Tell me a bit about what you need, I&apos;ll get back to you shortly.
+                        </p>
+
+                        <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <input
+                                    type="text"
+                                    required
+                                    placeholder="Your name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className="offers-input"
+                                />
+                                <input
+                                    type="email"
+                                    required
+                                    placeholder="Your email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="offers-input"
+                                />
+                            </div>
+                            <textarea
+                                required
+                                rows={5}
+                                placeholder="What are you looking for?"
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                className="offers-input resize-none"
+                            />
+                            <button type="submit" className="offers-pill-btn justify-center mt-2">
+                                Send message
+                            </button>
+                        </form>
+                    </div>
+                </section>
+                </main>
+
+                <footer className="border-t border-(--border-muted)">
+                    <div className="max-w-7xl mx-auto px-6 md:px-12 py-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                        <div>
+                            <div className="flex items-center gap-2.5">
+                                <span className="w-8 h-8 rounded-full bg-(--primary) text-white flex items-center justify-center text-sm font-bold shrink-0">
+                                    M
+                                </span>
+                                <span className="font-semibold">Marcos Gomez Alvarez</span>
+                            </div>
+                            <a
+                                href="mailto:marcg0128@hotmail.com"
+                                className="mt-2 inline-block text-sm text-(--text-muted) hover:text-(--text) transition-colors duration-200"
+                            >
+                                marcg0128@hotmail.com
+                            </a>
                         </div>
-                        <a
-                            href="mailto:marcg0128@hotmail.com"
-                            className="mt-2 inline-block text-sm text-(--text-muted) hover:text-(--text) transition-colors duration-200"
-                        >
-                            marcg0128@hotmail.com
-                        </a>
-                    </div>
 
-                    <div className="flex items-center gap-4">
-                        <a href="https://github.com/marcg0128" target="_blank" rel="noreferrer" className="opacity-70 hover:opacity-100 transition-opacity duration-200">
-                            <Image src="/github.svg" alt="GitHub" width={26} height={26} />
-                        </a>
-                        <a href="mailto:marcg0128@hotmail.com" className="opacity-70 hover:opacity-100 transition-opacity duration-200">
-                            <Image src="/umschlag.svg" alt="Email" width={26} height={26} />
-                        </a>
-                        <Link href="/" className="text-sm text-(--text-muted) hover:text-(--text) transition-colors duration-200 ml-2">
-                            Back to portfolio
-                        </Link>
+                        <div className="flex items-center gap-4">
+                            <a href="https://github.com/marcg0128" target="_blank" rel="noreferrer" className="opacity-70 hover:opacity-100 transition-opacity duration-200">
+                                <Image src="/github.svg" alt="GitHub" width={26} height={26} />
+                            </a>
+                            <a href="mailto:marcg0128@hotmail.com" className="opacity-70 hover:opacity-100 transition-opacity duration-200">
+                                <Image src="/umschlag.svg" alt="Email" width={26} height={26} />
+                            </a>
+                            <Link href="/" className="text-sm text-(--text-muted) hover:text-(--text) transition-colors duration-200 ml-2">
+                                Back to portfolio
+                            </Link>
+                        </div>
                     </div>
-                </div>
-            </footer>
+                </footer>
+            </div>
         </div>
     );
 }
