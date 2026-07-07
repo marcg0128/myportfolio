@@ -2,6 +2,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Skill docs and agent config contain example class names (e.g. "w-1/2") in prose;
+   excluding them keeps Tailwind's auto content scan from generating utilities that
+   were never actually used in the app. */
+@source not "../.claude";
+@source not "../.agents";
+
 @custom-variant dark (&:is(.dark *));
 
 @keyframes fadeIn {
@@ -39,4 +45,57 @@
 
     transform:  scale(1.05);
     transition: all 0.6s ease-in-out;
+}
+
+/* Light theme scope, used by pages that should break from the default dark theme (e.g. /offers) */
+.theme-light {
+    --bg-dark: hsl(220 30% 96%);
+    --bg: #FBFBFDFF;
+    --bg-light: color-mix(in oklab, #FFFFFFFF 70%, transparent);
+    --text: hsl(222 30% 12%);
+    --text-muted: hsl(220 15% 40%);
+    --highlight: hsl(220 20% 60%);
+    --border: oklch(0.7 0 0);
+    --border-muted: hsl(220 20% 85%);
+    --primary: #5227FF;
+    --secondary: oklch(0.2 0 0);
+
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.offers-site .offers-nav {
+    background-color: color-mix(in oklab, var(--bg) 85%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-muted);
+}
+
+.offers-site .offers-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1.25rem;
+    border-radius: 999px;
+    background-color: var(--primary);
+    color: white;
+    font-weight: 500;
+    transition: transform 160ms ease-out, opacity 200ms ease-out;
+}
+
+.offers-site .offers-pill-btn:hover {
+    opacity: 0.9;
+}
+
+.offers-site .offers-pill-btn:active {
+    transform: scale(0.96);
+}
+
+.offers-site .service-card {
+    transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .offers-site .service-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px -12px color-mix(in oklab, var(--primary) 25%, transparent);
+    }
 }

@@ -48,7 +48,7 @@ export default function NavBar() {
                     titleAnimated ? 'opacity-100' : 'opacity-0'
                 }`}
             >
-                <BoxComponent style={`${isOpen ? 'h-70' : 'h-20'} bg-(--bg)`}>
+                <BoxComponent style={`${isOpen ? 'h-70' : 'h-20'} bg-(--bg)`} w={"1/2"}>
                     <div>
 
                         <button
@@ -111,9 +111,9 @@ export default function NavBar() {
                             <NavBarCards
                                 title="Offers"
                                 links={[
-                                    { label: "Website", href: "https://github.com" },
-                                    { label: "Clients", href: "#portfolio" },
-                                    { label: "Others", href: "#portfolio" }
+                                    { label: "Website", href: "/offers" },
+                                    { label: "Clients", href: "/offers" },
+                                    { label: "Others", href: "/offers" }
                                 ]}
                                 delay={250}
                             />
