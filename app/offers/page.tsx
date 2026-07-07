@@ -104,8 +104,8 @@ export default function OffersPage() {
                     <div
                         className={`offers-nav mx-auto flex items-center justify-between transition-all duration-300 ${
                             scrolled
-                                ? "offers-nav--island max-w-3xl h-14 px-5 md:px-6"
-                                : "max-w-7xl h-16 px-6 md:px-12"
+                                ? "offers-nav--island max-w-5xl h-14 px-5 md:px-6"
+                                : "max-w-full h-16 px-6 md:px-43"
                         }`}
                         style={{ transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)" }}
                     >
@@ -328,8 +328,8 @@ export default function OffersPage() {
                             </a>
                         </div>
 
-                        <div className="flex items-center gap-4">
-                            <a href="https://github.com/marcg0128" target="_blank" rel="noreferrer" className="opacity-70 hover:opacity-100 transition-opacity duration-200">
+                        <div className="flex items-center gap-4 ">
+                            <a href="https://github.com/marcg0128" target="_blank" rel="noreferrer" className=" opacity-70 hover:opacity-100 transition-opacity duration-200">
                                 <Image src="/github.svg" alt="GitHub" width={26} height={26} />
                             </a>
                             <a href="mailto:marcg0128@hotmail.com" className="opacity-70 hover:opacity-100 transition-opacity duration-200">

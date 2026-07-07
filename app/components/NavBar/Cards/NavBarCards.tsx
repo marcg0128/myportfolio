@@ -37,8 +37,8 @@ export default function NavBarCards({title, links, delay = 0 }: NavBarCardsProps
                         href={link.href}
                         className="flex items-center text-[#9EB4CA] hover:text-white transition-colors duration-300"
                     >
-                        {/* Pfeil vor dem Link */}
-                        <img src="/pfeil-oben-rechts.svg" alt="arrow" className="w-4 h-4 mr-2"/>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        {title == "Offers" && <img src="/pfeil-oben-rechts.svg" alt="arrow" className="w-4 h-4 mr-2"/>}
                         {link.label}
                     </a>
                 ))}
