@@ -15,14 +15,14 @@
 
 :root {
     --bg-dark: hsl(228 79% 2%);
-    --bg: hsl(222 55% 5%);
-    --bg-light: hsl(220 35% 10%);
+    --bg: #050C13;
+    --bg-light: color-mix(in oklab, #0D151BFF 60%, transparent);
     --text: hsl(220 100% 98%);
     --text-muted: hsl(220 35% 73%);
     --highlight: hsl(220 20% 42%);
     --border: oklch(0.922 0 0);
     --border-muted: hsl(220 37% 20%);
-    --primary: oklch(0.205 0 0);
+    --primary: #5227FF;
     --secondary: oklch(0.97 0 0);
     --danger: hsl(9 26% 64%);
     --warning: hsl(52 19% 57%);
@@ -33,4 +33,10 @@
     font-family: "Bricolage Grotesque", sans-serif;
     color: var(--text);
     padding: 20px;
+}
+
+.career-box:hover {
+
+    transform:  scale(1.05);
+    transition: all 0.6s ease-in-out;
 }

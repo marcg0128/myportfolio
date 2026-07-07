@@ -44,11 +44,11 @@ export default function NavBar() {
             </div>
 
             <div
-                className={`flex justify-center items-start h-16 w-full fixed top-0 left-0 z-40 transition-opacity duration-1000 delay-500 ${
+                className={`flex justify-center items-start h-16 w-full fixed top-0 left-0 z-40  transition-opacity duration-1000 delay-500 ${
                     titleAnimated ? 'opacity-100' : 'opacity-0'
                 }`}
             >
-                <BoxComponent style={`${isOpen ? 'h-70' : 'h-20'}`}>
+                <BoxComponent style={`${isOpen ? 'h-70' : 'h-20'} bg-(--bg)`}>
                     <div>
 
                         <button
@@ -58,8 +58,8 @@ export default function NavBar() {
                                 setIsOpen(!isOpen);
                             }}
                         >
-                            <img
-                                src="./equal.svg"
+                            <Image
+                                src="equal.svg"
                                 alt="Equal image"
                                 width={70}
                                 height={100}

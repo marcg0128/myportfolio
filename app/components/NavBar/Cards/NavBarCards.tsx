@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 
 type NavBarCardsProps = {
-    color?: string;
     title: string;
     links: {
         label: string;
@@ -11,7 +10,7 @@ type NavBarCardsProps = {
     delay?: number;
 };
 
-export default function NavBarCards({ color = "#0F171F", title, links, delay = 0 }: NavBarCardsProps) {
+export default function NavBarCards({title, links, delay = 0 }: NavBarCardsProps) {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -24,7 +23,7 @@ export default function NavBarCards({ color = "#0F171F", title, links, delay = 0
 
     return (
         <div
-            className={`bg-[${color}] p-6 rounded-2xl w-64 h-40 flex flex-col transition-all duration-500 ${
+            className={`bg-[#0D151BFF]/60 outline outline-[#606060]/20 p-6 rounded-2xl w-64 h-40 flex flex-col transition-all duration-500 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
             }`}
         >

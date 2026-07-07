@@ -6,6 +6,7 @@ import Start from "@/app/pages/Start/Start";
 import NavBar from "@/app/components/NavBar/NarBar";
 import FillText from "@/app/components/Elements/FillText";
 import Aurora from "@/app/components/Elements/Aurora";
+import Me from "@/app/pages/Start/Me";
 
 
 export default function Home() {
@@ -28,7 +29,7 @@ export default function Home() {
                 <div className="fixed inset-0 z-0 w-full h">
                     <Aurora
                         colorStops={["#5227FF","#5227FF"]}
-                        amplitude={0.1}
+                        amplitude={0.3}
                         blend={0.5}
                     />
                 </div>
@@ -38,7 +39,7 @@ export default function Home() {
                 }`}>
                     <div>
                         <Start></Start>
-
+                        <Me/>
                     </div>
 
                 </div>
