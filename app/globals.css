@@ -58,12 +58,37 @@
     color: var(--text);
 }
 
-.theme-light .offer-card {
-    transition: transform 200ms ease-out, box-shadow 200ms ease-out, background-color 500ms;
+.offers-site .offers-nav {
+    background-color: color-mix(in oklab, var(--bg) 85%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-muted);
+}
+
+.offers-site .offers-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1.25rem;
+    border-radius: 999px;
+    background-color: var(--primary);
+    color: white;
+    font-weight: 500;
+    transition: transform 160ms ease-out, opacity 200ms ease-out;
+}
+
+.offers-site .offers-pill-btn:hover {
+    opacity: 0.9;
+}
+
+.offers-site .offers-pill-btn:active {
+    transform: scale(0.96);
+}
+
+.offers-site .service-card {
+    transition: transform 200ms ease-out, box-shadow 200ms ease-out;
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .theme-light .offer-card:hover {
+    .offers-site .service-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 12px 32px -12px color-mix(in oklab, var(--primary) 25%, transparent);
     }
