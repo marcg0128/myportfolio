@@ -111,9 +111,9 @@ export default function NavBar() {
                             <NavBarCards
                                 title="Offers"
                                 links={[
-                                    { label: "Website", href: "https://github.com" },
-                                    { label: "Clients", href: "#portfolio" },
-                                    { label: "Others", href: "#portfolio" }
+                                    { label: "Website", href: "/offers" },
+                                    { label: "Clients", href: "/offers" },
+                                    { label: "Others", href: "/offers" }
                                 ]}
                                 delay={250}
                             />
